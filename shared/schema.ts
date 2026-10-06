@@ -1,54 +1,55 @@
 import { sql } from "drizzle-orm";
-import { pgTable, text, varchar, integer, decimal, timestamp, boolean, jsonb } from "drizzle-orm/pg-core";
+import { sqliteTable, text, integer, real } from "drizzle-orm/sqlite-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
+import { nanoid } from 'nanoid';
 
-export const users = pgTable("users", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+export const users = sqliteTable("users", {
+  id: text("id").primaryKey().$defaultFn(() => nanoid()),
   username: text("username").notNull().unique(),
   password: text("password").notNull(),
   role: text("role").notNull().default("authority"),
 });
 
-export const junctions = pgTable("junctions", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+export const junctions = sqliteTable("junctions", {
+  id: text("id").primaryKey().$defaultFn(() => nanoid()),
   name: text("name").notNull(),
-  location: jsonb("location").notNull(), // {lat: number, lng: number}
+  location: text("location").notNull(), // JSON string {lat: number, lng: number}
   vehicleCount: integer("vehicle_count").notNull().default(0),
-  avgSpeed: decimal("avg_speed", { precision: 5, scale: 2 }).notNull().default("0"),
+  avgSpeed: real("avg_speed").notNull().default(0),
   greenTime: integer("green_time").notNull().default(45),
   redTime: integer("red_time").notNull().default(30),
   congestionLevel: text("congestion_level").notNull().default("low"), // low, medium, high
   status: text("status").notNull().default("active"),
-  lastUpdated: timestamp("last_updated").defaultNow(),
+  lastUpdated: integer("last_updated", { mode: "timestamp" }).default(sql`(strftime('%s', 'now'))`),
 });
 
-export const signalTimings = pgTable("signal_timings", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  junctionId: varchar("junction_id").references(() => junctions.id).notNull(),
+export const signalTimings = sqliteTable("signal_timings", {
+  id: text("id").primaryKey().$defaultFn(() => nanoid()),
+  junctionId: text("junction_id").references(() => junctions.id).notNull(),
   currentPhase: text("current_phase").notNull().default("green"), // green, red, yellow
-  phaseStartTime: timestamp("phase_start_time").defaultNow(),
-  phaseEndTime: timestamp("phase_end_time"),
-  aiOptimized: boolean("ai_optimized").notNull().default(false),
+  phaseStartTime: integer("phase_start_time", { mode: "timestamp" }).default(sql`(strftime('%s', 'now'))`),
+  phaseEndTime: integer("phase_end_time", { mode: "timestamp" }),
+  aiOptimized: integer("ai_optimized", { mode: "boolean" }).notNull().default(false),
 });
 
-export const aiRecommendations = pgTable("ai_recommendations", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  junctionId: varchar("junction_id").references(() => junctions.id).notNull(),
+export const aiRecommendations = sqliteTable("ai_recommendations", {
+  id: text("id").primaryKey().$defaultFn(() => nanoid()),
+  junctionId: text("junction_id").references(() => junctions.id).notNull(),
   recommendation: text("recommendation").notNull(),
-  confidenceScore: decimal("confidence_score", { precision: 3, scale: 2 }).notNull(),
-  applied: boolean("applied").notNull().default(false),
-  createdAt: timestamp("created_at").defaultNow(),
+  confidenceScore: real("confidence_score").notNull(),
+  applied: integer("applied", { mode: "boolean" }).notNull().default(false),
+  createdAt: integer("created_at", { mode: "timestamp" }).default(sql`(strftime('%s', 'now'))`),
 });
 
-export const trafficAnalytics = pgTable("traffic_analytics", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  date: timestamp("date").defaultNow(),
-  avgWaitTime: decimal("avg_wait_time", { precision: 5, scale: 2 }).notNull(),
-  avgCommuteTime: decimal("avg_commute_time", { precision: 5, scale: 2 }).notNull(),
-  co2Emissions: decimal("co2_emissions", { precision: 8, scale: 2 }).notNull(),
-  fuelConsumption: decimal("fuel_consumption", { precision: 8, scale: 2 }).notNull(),
-  aiMode: boolean("ai_mode").notNull().default(true),
+export const trafficAnalytics = sqliteTable("traffic_analytics", {
+  id: text("id").primaryKey().$defaultFn(() => nanoid()),
+  date: integer("date", { mode: "timestamp" }).default(sql`(strftime('%s', 'now'))`),
+  avgWaitTime: real("avg_wait_time").notNull(),
+  avgCommuteTime: real("avg_commute_time").notNull(),
+  co2Emissions: real("co2_emissions").notNull(),
+  fuelConsumption: real("fuel_consumption").notNull(),
+  aiMode: integer("ai_mode", { mode: "boolean" }).notNull().default(true),
 });
 
 // Insert schemas

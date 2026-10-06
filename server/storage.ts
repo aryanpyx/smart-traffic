@@ -55,9 +55,9 @@ export class DatabaseStorage implements IStorage {
       const sampleJunctionsData = [
         {
           name: "Main St & Broadway",
-          location: { lat: 40.7589, lng: -73.9851 },
+          location: JSON.stringify({ lat: 40.7589, lng: -73.9851 }),
           vehicleCount: 42,
-          avgSpeed: "35.00",
+          avgSpeed: 35.0,
           greenTime: 45,
           redTime: 30,
           congestionLevel: "low",
@@ -65,9 +65,9 @@ export class DatabaseStorage implements IStorage {
         },
         {
           name: "5th Ave & Park St", 
-          location: { lat: 40.7614, lng: -73.9776 },
+          location: JSON.stringify({ lat: 40.7614, lng: -73.9776 }),
           vehicleCount: 68,
-          avgSpeed: "22.00",
+          avgSpeed: 22.0,
           greenTime: 60,
           redTime: 25,
           congestionLevel: "medium",
@@ -75,9 +75,9 @@ export class DatabaseStorage implements IStorage {
         },
         {
           name: "Oak St & Elm Ave",
-          location: { lat: 40.7505, lng: -73.9934 },
+          location: JSON.stringify({ lat: 40.7505, lng: -73.9934 }),
           vehicleCount: 95,
-          avgSpeed: "12.00",
+          avgSpeed: 12.0,
           greenTime: 75,
           redTime: 20,
           congestionLevel: "high",
@@ -85,9 +85,9 @@ export class DatabaseStorage implements IStorage {
         },
         {
           name: "Center St & 1st Ave",
-          location: { lat: 40.7282, lng: -73.9942 },
+          location: JSON.stringify({ lat: 40.7282, lng: -73.9942 }),
           vehicleCount: 28,
-          avgSpeed: "45.00",
+          avgSpeed: 45.0,
           greenTime: 40,
           redTime: 35,
           congestionLevel: "low",
@@ -114,24 +114,24 @@ export class DatabaseStorage implements IStorage {
         await this.createAiRecommendation({
           junctionId: createdJunctions[2].id, // High congestion junction
           recommendation: "Extend green by 15s",
-          confidenceScore: "0.94",
+          confidenceScore: 0.94,
           applied: false
         });
 
         await this.createAiRecommendation({
           junctionId: createdJunctions[1].id, // Medium congestion junction
           recommendation: "Reduce red by 10s",
-          confidenceScore: "0.87",
+          confidenceScore: 0.87,
           applied: false
         });
       }
 
       // Create sample analytics data
       await this.createTrafficAnalytics({
-        avgWaitTime: "45.00",
-        avgCommuteTime: "9.80",
-        co2Emissions: "1800.00",
-        fuelConsumption: "645.00",
+        avgWaitTime: 45.0,
+        avgCommuteTime: 9.8,
+        co2Emissions: 1800.0,
+        fuelConsumption: 645.0,
         aiMode: true
       });
 

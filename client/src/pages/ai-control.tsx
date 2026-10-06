@@ -117,7 +117,7 @@ export default function AIControl() {
                     <p className="text-xs text-muted-foreground">{recommendation.recommendation}</p>
                     <div className="flex items-center gap-1 mt-1">
                       <span className="text-xs text-muted-foreground">Confidence:</span>
-                      <span className="text-xs font-medium">{(parseFloat(recommendation.confidenceScore) * 100).toFixed(0)}%</span>
+                      <span className="text-xs font-medium">{(recommendation.confidenceScore * 100).toFixed(0)}%</span>
                     </div>
                   </div>
                   {recommendation.applied ? (

@@ -292,7 +292,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         
         const updatedJunction = await storage.updateJunction(junction.id, {
           vehicleCount: Math.max(0, junction.vehicleCount + vehicleCountChange),
-          avgSpeed: Math.max(5, parseFloat(junction.avgSpeed) + speedChange).toFixed(2)
+          avgSpeed: parseFloat((Math.max(5, junction.avgSpeed + speedChange)).toFixed(2))
         });
         
         if (updatedJunction) {
