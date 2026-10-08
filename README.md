@@ -1,4 +1,4 @@
-<![CDATA[<div align="center">
+<div align="center">
 
 ![APYX Smart Traffic Banner](./banner.jpg)
 
@@ -12,9 +12,9 @@
 [![WebSocket](https://img.shields.io/badge/WebSocket-Real--Time-FF6B35?style=for-the-badge&logo=websocket&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket)
 [![License](https://img.shields.io/badge/License-MIT-22C55E?style=for-the-badge)](./LICENSE)
 
-<h3>AI-Powered Real-Time Urban Traffic Management & Signal Optimization Platform</h3>
+### AI-Powered Real-Time Urban Traffic Management & Signal Optimization Platform
 
-[Quick Start](#-quick-start) · [Documentation](#-architecture) · [API Reference](#-api-reference) · [Contributing](#-contributing)
+[Quick Start](#-quick-start) · [Architecture](#-architecture) · [API Reference](#-api-reference) · [Contributing](#-contributing)
 
 </div>
 
@@ -156,7 +156,7 @@ APYX-SMART traffic/
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-org/apyx-smart-traffic.git
+git clone https://github.com/aryanpyx/smart-traffic.git
 cd apyx-smart-traffic
 ```
 
@@ -294,9 +294,9 @@ The main operations center. Shows an overview of all active junctions, system-wi
 
 ### Traffic Map (`/map`)
 Interactive city map with color-coded junction markers:
-- **Green** — Low congestion, normal flow
-- **Yellow** — Medium congestion, monitoring
-- **Red** — High congestion, intervention needed
+- 🟢 **Green** — Low congestion, normal flow
+- 🟡 **Yellow** — Medium congestion, monitoring
+- 🔴 **Red** — High congestion, intervention needed
 
 ### AI Control (`/ai-control`)
 View and manage AI-generated signal timing recommendations. Each recommendation includes:
@@ -342,4 +342,3 @@ This project is licensed under the **MIT License** — see the [LICENSE](./LICEN
 *APYX Smart Traffic — Reducing congestion, one signal at a time.*
 
 </div>
-]]>
